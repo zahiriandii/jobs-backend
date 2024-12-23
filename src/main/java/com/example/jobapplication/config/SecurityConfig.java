@@ -18,7 +18,8 @@ public class SecurityConfig {
         http.cors().and()
                 .csrf().disable()  // Disable CSRF for now (enable it in production)
                 .authorizeRequests()
-                .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()  // Allow registration without auth
+                .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
+                .requestMatchers(HttpMethod.POST,"/api/auth/logIn").permitAll()// Allow registration without auth
                 .anyRequest().authenticated();  // Any other requests need to be authenticated
 
         return http.build();
