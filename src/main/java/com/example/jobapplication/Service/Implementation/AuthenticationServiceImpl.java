@@ -19,7 +19,7 @@ public class AuthenticationServiceImpl implements AuthenticationService
     public User logIn(String email, String password) {
         if (email != null && password != null)
         {
-            return this.userRepository.findByEmailAndPassword(email,password);
+            return this.userRepository.findByEmailAndPassword(email,password).orElseThrow(()->new RuntimeException());
         }
         else {
             throw new RuntimeException();
