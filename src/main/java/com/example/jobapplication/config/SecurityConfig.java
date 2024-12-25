@@ -20,7 +20,7 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
                 .requestMatchers(HttpMethod.POST,"/api/auth/logIn").permitAll()
-                .requestMatchers(HttpMethod.GET,"/api/auth/logOut").permitAll()// Allow registration without auth
+                .requestMatchers(HttpMethod.POST,"/api/auth/logOut").permitAll()// Allow registration without auth
                 .anyRequest().authenticated();  // Any other requests need to be authenticated
 
         return http.build();
