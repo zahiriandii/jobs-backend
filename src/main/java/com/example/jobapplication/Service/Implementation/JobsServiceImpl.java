@@ -4,6 +4,7 @@ import com.example.jobapplication.Model.Jobs;
 import com.example.jobapplication.Repository.JobsRepository;
 import com.example.jobapplication.Service.JobsService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ public class JobsServiceImpl implements JobsService
     public JobsServiceImpl(JobsRepository jobsRepository) {
         this.jobsRepository = jobsRepository;
     }
+
 
 
     @Override

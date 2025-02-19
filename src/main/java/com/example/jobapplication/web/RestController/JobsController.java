@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/jobs")
+@RequestMapping("/jobs")
 @CrossOrigin(origins = "http://localhost:5173")
 public class JobsController
 {
@@ -25,6 +25,7 @@ public class JobsController
     public ResponseEntity<List<Jobs>> getJobs ()
     {
         List<Jobs> jobs = jobsService.getAllJobs();
+        System.out.println("Jobs retrieved: " + jobs);
         return ResponseEntity.ok(jobs);
     }
 
