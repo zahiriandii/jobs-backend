@@ -1,21 +1,25 @@
 package com.example.jobapplication.Service.Implementation;
 
+import com.example.jobapplication.Model.Company;
 import com.example.jobapplication.Model.Jobs;
+import com.example.jobapplication.Repository.CompanyRepository;
 import com.example.jobapplication.Repository.JobsRepository;
 import com.example.jobapplication.Service.JobsService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class JobsServiceImpl implements JobsService
 {
 
     private final JobsRepository jobsRepository;
+    private final CompanyRepository companyRepository;
 
-    public JobsServiceImpl(JobsRepository jobsRepository) {
+    public JobsServiceImpl(JobsRepository jobsRepository, CompanyRepository companyRepository) {
         this.jobsRepository = jobsRepository;
+        this.companyRepository = companyRepository;
     }
 
 
@@ -23,5 +27,37 @@ public class JobsServiceImpl implements JobsService
     @Override
     public List<Jobs> getAllJobs() {
         return jobsRepository.findAll();
+    }
+
+    @Override
+    public Jobs findJobById(Long id) {
+        Optional<Jobs> job = jobsRepository.findById(id);
+        return  job.get();
+
+    }
+
+    @Override
+    public Jobs addNewJob(Jobs job) {
+        Jobs newJob = new Jobs();
+        newJob.setTitle(job.getTitle());
+        newJob.setType(job.getType());
+        newJob.setSalary(job.getSalary());
+        newJob.setDescription(job.getDescription());
+        newJob.setLocation(job.getLocation());
+
+        Company existingCompany = companyRepository.findByName(job.getCompany().getName());
+        if (existingCompany == null)
+        {
+            Company company = new Company();
+            company.setName(job.getCompany().getName());
+            company.setDescription(job.getCompany().getDescription());
+            company.setContactEmail(job.getCompany().getContactEmail());
+            company.setContactPhone(job.getCompany().getContactPhone());
+            existingCompany = companyRepository.save(company);
+        }
+        newJob.setCompany(existingCompany);
+
+
+       return jobsRepository.save(newJob);
     }
 }

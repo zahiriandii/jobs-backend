@@ -7,4 +7,6 @@ import java.util.List;
 public interface JobsService
 {
     List<Jobs> getAllJobs();
+    Jobs findJobById(Long id);
+    Jobs addNewJob (Jobs job);
 }
