@@ -21,6 +21,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/api/auth/register").permitAll()
                 .requestMatchers(HttpMethod.POST,"/api/auth/logIn").permitAll()
                 .requestMatchers(HttpMethod.GET,"/jobs/allJobs").permitAll()
+                .requestMatchers(HttpMethod.GET,"/jobs/{jobId}").permitAll()
+                .requestMatchers(HttpMethod.POST,"/jobs").permitAll()
                 .requestMatchers(HttpMethod.POST,"/api/auth/logOut").permitAll()// Allow registration without auth
                 .anyRequest().authenticated();  // Any other requests need to be authenticated
 
