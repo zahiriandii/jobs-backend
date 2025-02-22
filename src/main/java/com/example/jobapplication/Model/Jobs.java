@@ -25,7 +25,7 @@ public class Jobs
     private String location;
     @JsonProperty("salary")
     private String salary;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private Company company;
 
