@@ -96,5 +96,10 @@ public class JobsServiceImpl implements JobsService
 
     }
 
+    @Override
+    public void deleteJob(Long jobId) {
+        jobsRepository.deleteById(jobId);
+    }
+
 
 }

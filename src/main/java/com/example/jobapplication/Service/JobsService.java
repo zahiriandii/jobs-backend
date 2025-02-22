@@ -10,4 +10,5 @@ public interface JobsService
     Jobs findJobById(Long id);
     Jobs addNewJob (Jobs job);
     Jobs updateJob (Long jobId,Jobs job);
+    void deleteJob (Long jobId);
 }
