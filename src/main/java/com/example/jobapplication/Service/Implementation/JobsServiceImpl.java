@@ -5,6 +5,8 @@ import com.example.jobapplication.Model.Jobs;
 import com.example.jobapplication.Repository.CompanyRepository;
 import com.example.jobapplication.Repository.JobsRepository;
 import com.example.jobapplication.Service.JobsService;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -60,4 +62,39 @@ public class JobsServiceImpl implements JobsService
 
        return jobsRepository.save(newJob);
     }
+
+    @Transactional
+    @Override
+    public Jobs updateJob(Long jobId, Jobs job) {
+        Jobs updateJob = jobsRepository.findById(jobId)
+                .orElseThrow(() -> new EntityNotFoundException("Job not found with ID: " + jobId));
+
+        updateJob.setTitle(job.getTitle());
+        updateJob.setType(job.getType());
+        updateJob.setDescription(job.getDescription());
+        updateJob.setLocation(job.getLocation());
+        updateJob.setSalary(job.getSalary());
+
+        if (job.getCompany() != null && job.getCompany().getName() != null) {
+            Company updateCompany = companyRepository.findByName(job.getCompany().getName());
+
+            // Updating company details
+            updateCompany.setDescription(job.getCompany().getDescription());
+            updateCompany.setName(job.getCompany().getName());
+            updateCompany.setContactEmail(job.getCompany().getContactEmail());
+            updateCompany.setContactPhone(job.getCompany().getContactPhone());
+
+            // Explicitly saving the updated company before linking it to the job
+            companyRepository.save(updateCompany);
+
+            // Reassign the updated company to the job
+            updateJob.setCompany(updateCompany);
+        }
+
+        // Save the job entity
+        return jobsRepository.save(updateJob);
+
+    }
+
+
 }
